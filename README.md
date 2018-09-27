@@ -1,4 +1,4 @@
-#Base de datos del SFMPR
+# Base de datos del SFMPR
 
 Base de datos para la gestión del SFMPR.
 Realizada en **Python 2.7/Django 1.11.**
