@@ -1,0 +1,32 @@
+{% extends 'sfmpr/base.html' %}
+
+{% load staticfiles %}
+
+{% block content %}
+    <div class="top-menu">
+        <h1>
+            <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'lista_servicios' fk=servicio.centro.pk %}';" title="Volver a Servicios">
+                <img src="{% static 'images/trebol.svg' %}"> <span class="glyphicon glyphicon-triangle-left"></span>
+            </button>
+            {{ servicio.nombre }}
+            <button type="button" class="btn btn-primary">
+                <img src="{% static 'images/trebol.svg' %}"> Equipos
+            </button>
+            <button type="button" class="btn btn-primary" title="Dosímetros">
+                <span class="glyphicon glyphicon-tags"></span>
+            </button>
+            <button type="button" class="btn btn-primary" title="Licencias">
+                <span class="glyphicon glyphicon-credit-card"></span>
+            </button>
+        </h1>
+    </div>
+    <div class="detalles">
+        <p><b>Centro: </b> {{ servicio.centro }}</p>
+        <p><b>Nº IR: </b> {{ servicio.n_ir|default_if_none:"---" }}</p>
+        <p><b>Expediente: </b> {{ servicio.expediente|default_if_none:"---" }}</p>
+        <p><b>Categoría: </b> {{ servicio.categoriair }}</p>
+        <p><b>Fecha de alta: </b> {{ servicio.fecha_alta }}</p>
+        <p><b>Fecha de baja: </b>{{ servicio.fecha_baja|default_if_none:"---" }}</p>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html lang="es">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <title>Base de datos SFMPR</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu:500" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/mega.css' %}">
+    </head>
+    <body>
+        <header>
+            <img src="{% static 'images/sespa.png' %}" alt="Logo SESPA" align="left">
+            <div id="sfmpr">
+                <h1>Servicio de Física Médica y Protección Radiológica</h1>
+            </div>
+        </header>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <p class="navbar-brand">Bases de Datos</p>
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/"> <span class="glyphicon glyphicon-home"></span> Centros</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#"> <span class="glyphicon glyphicon-question-sign"></span> Ayuda </a>
+                    </li>
+                    <li>
+                        <a href="/admin"> <span class="glyphicon glyphicon-cog"></span> Ajustes </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    <!-- El footer así se superpone con otros elementos...seguir buscando
+    <footer>
+        <h3>
+            ©2018 <a href="mailto: miguel.peinado@sespa.es">Miguel A. Peinado Montes
+            <span class="glyphicon glyphicon-envelope"></span></a>
+            ...reutilizable bajo <a href="https://www.gnu.org/licenses/licenses.html">licencia GNU GPLv3</a>
+        </h3>
+    </footer>
+    -->
+    </body>
+</html>

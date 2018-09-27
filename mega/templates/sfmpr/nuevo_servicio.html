@@ -1,0 +1,28 @@
+{% extends 'sfmpr/base.html' %}
+
+{% load staticfiles %}
+
+{% block content %}
+    <div class="top-menu">
+        <h1>
+            <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'lista_servicios' fk=form.initial.centro %}';" title="Volver a Servicios">
+                <img src="{% static 'images/trebol.svg' %}"> <span class="glyphicon glyphicon-triangle-left"></span>
+            </button>
+            {% if form.initial.nombre %}
+                {{ form.initial.nombre }}
+            {% else %}
+                Nuevo Servicio
+            {% endif %}
+
+        </h1>
+    </div>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+    <button type="submit" class="save btn btn-primary" title="Guardar">
+        <span class="glyphicon glyphicon-save"></span>
+    </button>
+    </form>
+    <hr class="foot-note">
+    <p>(*) El fondo rojo implica un campo obligatorio</p>
+
+{% endblock %}

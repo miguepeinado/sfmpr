@@ -1,0 +1,51 @@
+{% extends 'sfmpr/base.html' %}
+
+{% load staticfiles %}
+
+{% block content %}
+    <div class="top-menu">
+        <h1>Centros
+        <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'nuevo_centro' %}';" title="Añadir nuevo">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+        <!-- Poner este botón en otras listas
+        <button type="button" class="btn btn-primary" onclick="#">
+            <span class="glyphicon glyphicon-step-backward"></span>
+        </button>
+        -->
+        </h1>
+    </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Centro</th>
+                    <th>Dirección</th>
+                    <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for c in centros %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'ver_centro' pk=c.pk %}">
+                                {{ c }}
+                            </a>
+                        </td>
+                    <td>{{ c.direccion }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'ver_centro' pk=c.pk %}';" title="Ver datos">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'editar_centro' pk=c.pk %}';" title="Editar datos">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'lista_servicios' fk=c.pk %}';" title="Ver Servicios">
+                            <img src="{% static 'images/trebol.svg' %}">
+                        </button>
+                    </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

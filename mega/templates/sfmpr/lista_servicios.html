@@ -1,0 +1,57 @@
+{% extends 'sfmpr/base.html' %}
+
+{% load staticfiles %}
+
+{% block content %}
+    <div class="top-menu">
+        <h1> <a href="{% url 'ver_centro' pk=centro.pk %}">{{ centro }}</a> > Servicios
+        <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'nuevo_servicio' fk=centro.pk %}';" title="Añadir nuevo">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+        <!-- Poner este botón en otras listas
+        <button type="button" class="btn btn-primary" onclick="#">
+            <span class="glyphicon glyphicon-step-backward"></span>
+        </button>
+        -->
+        </h1>
+    </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Servicios</th>
+                    <th>Nº IR (Expte.)</th>
+                    <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for s in servicios %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'ver_centro' pk=s.pk %}">
+                                {{ s.nombre }}
+                            </a>
+                        </td>
+                    <td>{{ s.n_ir|add:s.expediente }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'ver_servicio' pk=s.pk %}';"  title="Ver datos">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'editar_servicio' pk=s.pk %}';"  title="Editar datos">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                            <img src="{% static 'images/trebol.svg' %}"> Equipos
+                        </button>
+                        <button type="button" class="btn btn-primary" title="Dosímetros">
+                            <span class="glyphicon glyphicon-tags"></span>
+                        </button>
+                        <button type="button" class="btn btn-primary" title="Licencias">
+                            <span class="glyphicon glyphicon-credit-card"></span>
+                        </button>
+                    </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
