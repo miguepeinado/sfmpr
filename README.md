@@ -1,4 +1,4 @@
-#Base de datos del SFMPR
+# Base de datos del SFMPR
 
 Base de datos para la gestión del SFMPR.
 Realizada en **Python 2.7/Django 1.11.**
@@ -18,9 +18,14 @@ una sola vista.
 de los formularios.
 1. Pedir ususario/contraseña al comienzo.
 1. Hacer un *log out* al final 
+1. Barra de búsqueda
 1. ...y por supuesto añadir nuevas funcionalidades:
-Equipos, dosímetros, licencias...con informes de todo. 
+    1. Equipos-> Incidencias: Gestión y equipos declarados en un año
+    1. Dosímetros
+    1. Licencias
+
+...con informes y notificaciones de todo. 
 
 ### BUGS
 
-No se han detectado bugs
+No se han detectado bugs.

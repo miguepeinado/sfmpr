@@ -30,7 +30,7 @@ class Centro(models.Model):
     ciudad = models.CharField(max_length=50)
     dp = models.CharField(max_length=5)
     provincia = models.CharField(max_length=25, default='Asturias')
-    fecha_alta = models.DateField(default=timezone.now())
+    fecha_alta = models.DateField(default=timezone.now)
     fecha_baja = models.DateField(null=True, blank=True)
 
     def __str__(self):
@@ -54,7 +54,7 @@ class Servicio(models.Model):
     n_ir = models.CharField(max_length=50, null=True, blank=True)
     expediente = models.CharField(max_length=50, null=True, blank=True)
     categoriair = models.ForeignKey(CategoriaIR, on_delete=models.CASCADE)
-    fecha_alta = models.DateField(default=timezone.now())
+    fecha_alta = models.DateField(default=timezone.now)
     fecha_baja = models.DateField(null=True, blank=True)
 
     def __str__(self):
