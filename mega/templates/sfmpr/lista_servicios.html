@@ -27,11 +27,11 @@
                 {% for s in servicios %}
                     <tr>
                         <td>
-                            <a href="{% url 'ver_centro' pk=s.pk %}">
+                            <a href="{% url 'ver_servicio' pk=s.pk %}">
                                 {{ s.nombre }}
                             </a>
                         </td>
-                    <td>{{ s.n_ir|add:s.expediente }}</td>
+                    <td>{{ s.codigo_completo }}</td>
                     <td>
                         <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'ver_servicio' pk=s.pk %}';"  title="Ver datos">
                             <span class="glyphicon glyphicon-eye-open"></span>
@@ -39,8 +39,8 @@
                         <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'editar_servicio' pk=s.pk %}';"  title="Editar datos">
                             <span class="glyphicon glyphicon-pencil"></span>
                         </button>
-                        <button type="button" class="btn btn-primary">
-                            <img src="{% static 'images/trebol.svg' %}"> Equipos
+                        <button type="button" class="btn btn-primary" title="Equipos">
+                            <img src="{% static 'images/equipos.svg' %}">
                         </button>
                         <button type="button" class="btn btn-primary" title="Dosímetros">
                             <span class="glyphicon glyphicon-tags"></span>

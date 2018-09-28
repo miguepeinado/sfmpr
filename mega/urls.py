@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^sfmpr/nuevo_servicio/(?P<fk>[0-9]+)/$', views.nuevo_servicio, name='nuevo_servicio'),
     url(r'^servicio/(?P<pk>[0-9]+)/$', views.ver_servicio, name='ver_servicio'),
     url(r'^servicio/(?P<pk>[0-9]+)/editar/$', views.editar_servicio, name='editar_servicio'),
+    url(r'^otros/$', views.otros, name='otros'),
 ]
