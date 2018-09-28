@@ -27,11 +27,11 @@
                 {% for s in servicios %}
                     <tr>
                         <td>
-                            <a href="{% url 'ver_centro' pk=s.pk %}">
+                            <a href="{% url 'ver_servicio' pk=s.pk %}">
                                 {{ s.nombre }}
                             </a>
                         </td>
-                    <td>{{ s.n_ir|add:s.expediente }}</td>
+                    <td>{{ s.n_ir|add:" ("|add:s.expediente|add:")" }}</td>
                     <td>
                         <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'ver_servicio' pk=s.pk %}';"  title="Ver datos">
                             <span class="glyphicon glyphicon-eye-open"></span>

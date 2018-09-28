@@ -15,7 +15,7 @@ class Titular(models.Model):
     ciudad = models.CharField(max_length=50)
     dp = models.CharField(max_length=5)
     provincia = models.CharField(max_length=25, default='Asturias')
-    siglas = models.CharField(max_length=10, blank=True)
+    siglas = models.CharField(max_length=10, null=True, blank=True)
 
     def __str__(self):
         return self.nombre
@@ -34,7 +34,9 @@ class Centro(models.Model):
     fecha_baja = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        txt = (self.area + " - ") if len(self.area) > 0 else ""
+        txt = ""
+        if self.area is not None and len(self.area) > 0:
+            txt = (self.area + " - ")
         txt += self.nombre
         return txt
 

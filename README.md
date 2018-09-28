@@ -28,4 +28,4 @@ de los formularios.
 
 ### BUGS
 
-No se han detectado bugs.
+No se han detectado Bugs
