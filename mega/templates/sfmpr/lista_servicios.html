@@ -33,19 +33,19 @@
                         </td>
                     <td>{{ s.codigo_completo }}</td>
                     <td>
-                        <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'ver_servicio' pk=s.pk %}';"  title="Ver datos">
+                        <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'ver_servicio' pk=s.pk %}';" title="Ver datos">
                             <span class="glyphicon glyphicon-eye-open"></span>
                         </button>
-                        <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'editar_servicio' pk=s.pk %}';"  title="Editar datos">
+                        <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'editar_servicio' pk=s.pk %}';" title="Editar datos">
                             <span class="glyphicon glyphicon-pencil"></span>
                         </button>
-                        <button type="button" class="btn btn-primary" title="Equipos">
-                            <img src="{% static 'images/equipos.svg' %}">
+                        <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'lista_equipos' fk=s.pk %}';" title="Equipos">
+                            <img src="{% static 'images/equipos.svg' %}"> &nbsp; <span class="badge">{{ s.equipos }}</span>
                         </button>
-                        <button type="button" class="btn btn-primary" title="Dosímetros">
+                        <button type="button" class="btn btn-primary disabled" title="Dosímetros">
                             <span class="glyphicon glyphicon-tags"></span>
                         </button>
-                        <button type="button" class="btn btn-primary" title="Licencias">
+                        <button type="button" class="btn btn-primary disabled" title="Licencias">
                             <span class="glyphicon glyphicon-credit-card"></span>
                         </button>
                     </td>

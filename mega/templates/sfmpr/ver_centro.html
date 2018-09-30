@@ -6,7 +6,7 @@
     <div class="top-menu">
         <h1>
             <button type="button" class="btn btn-primary" onclick="location.href = '/';" title="Volver a Centros">
-                <span class="glyphicon glyphicon-home"></span> <span class="glyphicon glyphicon-triangle-left"></span>
+                <span class="glyphicon glyphicon-home"></span> &nbsp; <span class="glyphicon glyphicon-triangle-left"></span>
             </button>
             {{ centro.nombre }}
             <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'editar_centro' pk=centro.pk %}';" title="Editar datos">
@@ -18,14 +18,9 @@
         </h1>
     </div>
     <div class="detalles">
-        <p><b>Titular:</b> {{ centro.titular }}</p>
-        <p><b>Área sanitaria: </b> {{ centro.area }}</p>
-        <p><b>Dirección: </b> {{ centro.direccion }}</p>
-        <p><b>Ciudad:</b> {{ centro.ciudad }}</p>
-        <p><b>Código postal: </b> {{ centro.dp }}</p>
-        <p><b>Provincia: </b> {{ centro.provincia }}</p>
-        <p><b>Fecha de alta: </b> {{ centro.fecha_alta }}</p>
-        <p><b>Fecha de baja: </b>{{ centro.fecha_baja|default_if_none:"---" }}</p>
+        {% for key, value in datos.items %}
+            <p><b>{{ key }}: </b> {{ value }}</p>
+        {% endfor %}
     </div>
 
 {% endblock %}

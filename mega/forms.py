@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from .models import Centro, Servicio
+from .models import Centro, Servicio, Equipo
 
 
 class FormCentro(forms.ModelForm):
@@ -22,3 +22,11 @@ class FormServicio(forms.ModelForm):
         fields = '__all__'
         widgets = {}
         labels = {'categoriair': 'Categoria IR',}
+
+
+class FormEquipo(forms.ModelForm):
+
+    class Meta:
+        model = Equipo
+        fields = '__all__'
+        widgets = {}

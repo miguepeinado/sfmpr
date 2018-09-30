@@ -6,11 +6,11 @@
     <div class="top-menu">
         <h1>
             <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'lista_servicios' fk=servicio.centro.pk %}';" title="Volver a Servicios">
-                <img src="{% static 'images/trebol.svg' %}"> <span class="glyphicon glyphicon-triangle-left"></span>
+                <img src="{% static 'images/trebol.svg' %}"> &nbsp; <span class="glyphicon glyphicon-triangle-left"></span>
             </button>
             {{ servicio.nombre }}
-            <button type="button" class="btn btn-primary" title="Equipos">
-                <img src="{% static 'images/equipos.svg' %}">
+            <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'lista_equipos' fk=servicio.pk %}';" title="Equipos">
+                <img src="{% static 'images/equipos.svg' %}"> &nbsp; <span class="badge">{{ servicio.equipos }}</span>
             </button>
             <button type="button" class="btn btn-primary" title="Dosímetros">
                 <span class="glyphicon glyphicon-tags"></span>
@@ -21,12 +21,9 @@
         </h1>
     </div>
     <div class="detalles">
-        <p><b>Centro: </b> {{ servicio.centro }}</p>
-        <p><b>Nº IR: </b> {{ servicio.n_ir|default_if_none:"---" }}</p>
-        <p><b>Expediente: </b> {{ servicio.expediente|default_if_none:"---" }}</p>
-        <p><b>Categoría: </b> {{ servicio.categoriair }}</p>
-        <p><b>Fecha de alta: </b> {{ servicio.fecha_alta }}</p>
-        <p><b>Fecha de baja: </b>{{ servicio.fecha_baja|default_if_none:"---" }}</p>
+        {% for key, value in datos.items %}
+            <p><b>{{ key }}: </b> {{ value }}</p>
+        {% endfor %}
     </div>
 
 {% endblock %}
