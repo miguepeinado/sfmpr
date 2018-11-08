@@ -13,6 +13,8 @@
         <link rel="stylesheet" href="{% static 'css/mega.css' %}">
     </head>
     <body>
+        {% block extra_js %}
+        {% endblock extra_js %}
         <header>
             <img src="{% static 'images/sespa.png' %}" alt="Logo SESPA" align="left">
             <div id="sfmpr">

@@ -42,6 +42,10 @@ class Centro(models.Model):
         return txt
 
 
+    def servicios(self):
+        return Servicio.objects.filter(centro=self)
+
+
 @python_2_unicode_compatible
 class CategoriaIR(models.Model):
     categoria = models.CharField(max_length=100)

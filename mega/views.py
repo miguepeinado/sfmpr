@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from collections import OrderedDict
 
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth import login, authenticate
 from django.forms.widgets import DateInput
 from .models import Centro, Servicio, Equipo
 from .forms import FormCentro, FormServicio, FormEquipo
@@ -24,13 +25,12 @@ def datos(model_instance):
 
 def lista_centros(request):
     centros = Centro.objects.all().order_by('area', 'nombre')
-    return render(request, 'sfmpr/lista_centros.html', {'centros': centros})
+    return render(request, 'sfmpr/lista_centros.html', {'centros': centros,})
 
 
 def ver_centro(request, pk):
-    centro = get_object_or_404(Centro, pk=pk)
-    print datos(centro)
-    return render(request, 'sfmpr/ver_centro.html', {'centro': centro, 'datos': datos(centro)})
+        centro = get_object_or_404(Centro, pk=pk)
+        return render(request, 'sfmpr/ver_centro.html', {'centro': centro, 'datos': datos(centro)})
 
 
 def nuevo_centro(request):
