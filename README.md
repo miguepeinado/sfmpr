@@ -18,14 +18,23 @@ a los que el SFMPR presta servicios.
  se hace con un bucle) 
 * Añadida funcionalidad para los equipos
 
+## *Versión 0.2.1 (11/11/18)*
+
+* Cambiada la interfaz de usuario
+    * Los formularios aparecen como *pop-ups*.
+    * Las tablas de centros y servicios aparecen en una sola vista.
+    
+* BUG resuelto: En el formulario de nuevo servicio no se seleccionaba ningún centro por defecto
+    
 ### TODO
 
+1. Añadir en herramientas para modificar la tabla de titulares
+1. Eliminar/Deshabilitar botones si el servicio no es IR
+1. Añadir datos de IR y expediente
 1. Cambiar la interfaz de usuario
-    1. Poner los formularios como *pop-ups*.
-    1. Incluir dos tablas en una sola vista.
     1. Personalizar los widgets de los formularios.
     1. Poner una barra de navegacion debajo del epigrafe
-1. Pedir ususario/contraseña al comienzo.
+1. Pedir usuario/contraseña al comienzo.
 1. Hacer un *log out* al final 
 1. Barra de búsqueda
 1. Cambiar a un motor de bases de datos más seguro que sqlite
@@ -39,4 +48,4 @@ a los que el SFMPR presta servicios.
 
 ### BUGS
 
-No se han detectado Bugs
+¿?

@@ -3,16 +3,16 @@ from . import views
 
 urlpatterns = [
     # Primera pagina...cambiar cuando pidamos ingresar con usuario
-    url(r'^$', views.lista_centros),
+    url(r'^$', views.lista_centros, name='lista_centros'),
     # centros
-    url(r'^sfmpr/nuevo_centro/$', views.nuevo_centro, name='nuevo_centro'),
-    url(r'^centro/(?P<pk>[0-9]+)/$', views.ver_centro, name='ver_centro'),
-    url(r'^centro/(?P<pk>[0-9]+)/editar/$', views.editar_centro, name='editar_centro'),
+    url(r'^nuevo_centro/$', views.NuevoCentro.as_view(), name='nuevo_centro'),
+    url(r'^ver_centro/(?P<pk>[0-9]+)/$', views.ver_centro, name='ver_centro'),
+    url(r'^editar_centro/(?P<pk>[0-9]+)/$', views.EditarCentro.as_view(), name='editar_centro'),
     # servicios
-    url(r'^sfmpr/lista_servicios/(?P<fk>[0-9]+)/$', views.lista_servicios, name='lista_servicios'),
-    url(r'^sfmpr/nuevo_servicio/(?P<fk>[0-9]+)/$', views.nuevo_servicio, name='nuevo_servicio'),
-    url(r'^servicio/(?P<pk>[0-9]+)/$', views.ver_servicio, name='ver_servicio'),
-    url(r'^servicio/(?P<pk>[0-9]+)/editar/$', views.editar_servicio, name='editar_servicio'),
+    url(r'^nuevo_servicio/(?P<fk>[0-9]+)/$', views.NuevoServicio.as_view(), name='nuevo_servicio'),
+    # url(r'^nuevo_servicio/$', views.NuevoServicio.as_view(), name='nuevo_servicio'),
+    url(r'^ver_servicio/(?P<pk>[0-9]+)/$', views.ver_servicio, name='ver_servicio'),
+    url(r'^editar_servicio/(?P<pk>[0-9]+)/$', views.EditarServicio.as_view(), name='editar_servicio'),
     # Equipos
     url(r'^sfmpr/lista_equipos/(?P<fk>[0-9]+)/$', views.lista_equipos, name='lista_equipos'),
     url(r'^sfmpr/nuevo_equipo/(?P<fk>[0-9]+)/$', views.nuevo_equipo, name='nuevo_equipo'),

@@ -21,7 +21,7 @@ class FormServicio(forms.ModelForm):
         model = Servicio
         fields = '__all__'
         widgets = {}
-        labels = {'categoriair': 'Categoria IR',}
+        labels = {'n_ir':'Nº IR', 'categoriair': 'Categoria IR',}
 
 
 class FormEquipo(forms.ModelForm):
