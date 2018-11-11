@@ -1,0 +1,37 @@
+{% load staticfiles %}
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        {% if object %}
+            <form role="form" action="{% url 'editar_centro' object.pk %}" method="post">
+        {% else %}
+            <form role="form" action="{% url 'nuevo_centro' %}" method="post">
+        {% endif %}
+        <div class="modal-header">
+            <h3>
+                {% if form.initial.nombre %}
+                    {{ form.initial.nombre }}
+                {% else %}
+                    Nuevo Servicio
+                {% endif %}
+
+            </h3>
+        </div>
+        {% csrf_token %}
+        <div class="modal-body">
+            <div class="detalles">
+                {{ form.as_p }}
+            </div>
+            <hr class="foot-note">
+            <p>(*) El fondo rojo implica un campo obligatorio</p>
+        </div>
+        <div class="modal-footer">
+            <div class="col-lg-12 text-right">
+                <button type="submit" class="save btn btn-primary" title="Guardar">
+                    <span class="glyphicon glyphicon-save"></span>
+                </button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>

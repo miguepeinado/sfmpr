@@ -2,6 +2,9 @@
 from __future__ import unicode_literals
 from collections import OrderedDict
 
+from django.views.generic.edit import UpdateView, CreateView
+from django.core.urlresolvers import reverse_lazy
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login, authenticate
 from django.forms.widgets import DateInput
@@ -33,36 +36,19 @@ def ver_centro(request, pk):
         return render(request, 'sfmpr/ver_centro.html', {'centro': centro, 'datos': datos(centro)})
 
 
-def nuevo_centro(request):
-    if request.method == "POST":
-        form = FormCentro(request.POST)
-        if form.is_valid():
-            centro = form.save(commit=False)
-            centro.save()
-        return redirect('ver_centro', pk=centro.pk)
-    else:
-        form = FormCentro()
-    return render(request, 'sfmpr/nuevo_centro.html', {'form': form})
+class NuevoCentro(CreateView):
+    template_name = 'sfmpr/centro.html'
+    form_class = FormCentro
+    success_url = reverse_lazy('lista_centros')
 
 
-def editar_centro(request, pk):
-    centro = get_object_or_404(Centro, pk=pk)
-    if request.method == "POST":
-        form = FormCentro(request.POST, instance=centro)
-        if form.is_valid():
-            centro = form.save(commit=False)
-            centro.author = request.user
-            centro.save()
-        return redirect('ver_centro', pk=centro.pk)
-    else:
-        form = FormCentro(instance=centro)
-    return render(request, 'sfmpr/nuevo_centro.html', {'form': form})
+class EditarCentro(UpdateView):
+    model = Centro
+    template_name = 'sfmpr/centro.html'
+    form_class = FormCentro
+    success_url = reverse_lazy('lista_centros')
 
-
-def lista_servicios(request, fk):
-    servicios = Servicio.objects.filter(centro=fk).order_by('nombre')
-    centro = Centro.objects.filter(id=fk)[0]
-    return render(request, 'sfmpr/lista_servicios.html', {'servicios': servicios, 'centro': centro})
+# <--------------------->
 
 
 def ver_servicio(request, pk):
@@ -70,32 +56,19 @@ def ver_servicio(request, pk):
     return render(request, 'sfmpr/ver_servicio.html', {'servicio': servicio, 'datos': datos(servicio)})
 
 
-def nuevo_servicio(request, fk):
-    if request.method == "POST":
-        form = FormServicio(request.POST)
-        if form.is_valid():
-            servicio = form.save(commit=False)
-            servicio.save()
-        return redirect('ver_servicio', pk=servicio.pk)
-    else:
-        form = FormServicio(initial={'centro': fk})
-        form._meta.widgets['fecha_alta']=DateInput()
-    return render(request, 'sfmpr/nuevo_servicio.html', {'form': form})
+class NuevoServicio(CreateView):
+    template_name = 'sfmpr/servicio.html'
+    form_class = FormServicio
+    success_url = reverse_lazy('lista_centros')
 
 
-def editar_servicio(request, pk):
-    servicio = get_object_or_404(Servicio, pk=pk)
-    if request.method == "POST":
-        form = FormServicio(request.POST, instance=servicio)
-        if form.is_valid():
-            servicio = form.save(commit=False)
-            servicio.author = request.user
-            servicio.save()
-        return redirect('ver_servicio', pk=servicio.pk)
-    else:
-        form = FormServicio(instance=servicio)
-    return render(request, 'sfmpr/nuevo_servicio.html', {'form': form})
+class EditarServicio(UpdateView):
+    model = Servicio
+    template_name = 'sfmpr/servicio.html'
+    form_class = FormServicio
+    success_url = reverse_lazy('lista_centros')
 
+# <----------------------->
 
 def lista_equipos(request, fk):
     equipos = Equipo.objects.filter(servicio=fk).order_by('referencia')
@@ -133,17 +106,6 @@ def editar_equipo(request, pk):
     else:
         form = FormEquipo(instance=equipo)
     return render(request, 'sfmpr/nuevo_equipo.html', {'form': form})
-
-
-class Mensaje:
-    """
-    Only for log purposes
-    """
-    titulo = "29/09/09: Implementar migracion de las base de datos anteriores"
-    descripcion = "<p>Cargar en la base de datos del sitio las filas de la base de datos de mi ordenador</p>"
-
-    def add_mess(self, msg):
-        Mensaje.descripcion += "<p>" + msg + "</p>"
 
 
 def otros(request):

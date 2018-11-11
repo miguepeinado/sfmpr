@@ -13,15 +13,30 @@
                 $("button#expander[value=" + id + "] span.glyphicon").toggleClass("glyphicon-chevron-down glyphicon-chevron-right") ;
             });
         });
+
+        function abrir_modal(url) {
+	        $('#popup').load(url, function() {
+		        $(this).modal('show');
+	        });
+	        return false;
+        }
+
+        function cerrar_modal() {
+            $('#popup').modal('hide');
+            return false;
+        }
+
+
     </script>
 {% endblock extra_js %}
 
 {% block content %}
     <div class="top-menu">
         <h1>Centros
-        <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'nuevo_centro' %}';" title="Añadir nuevo">
+        <button type="button" class="btn btn-primary" onclick="return abrir_modal('{% url 'nuevo_centro' %}')" title="Añadir nuevo Centro">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
+
         <!-- Poner este botón en otras listas
         <button type="button" class="btn btn-primary" onclick="#">
             <span class="glyphicon glyphicon-step-backward"></span>
@@ -46,34 +61,47 @@
                                 <span class="glyphicon glyphicon-chevron-right"></span>
                             </button>
                             &nbsp;
-                            <a href="{% url 'ver_centro' pk=c.pk %}">
+                            <a href="#" onclick="return abrir_modal('{% url 'ver_centro' c.pk %}')" title="Ver datos">
                                 {{ c }}
                             </a>
                         </td>
                         <td>{{ c.direccion }}
                         </td>
                         <td>
-                            <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'ver_centro' pk=c.pk %}';" title="Ver datos">
+                            <button type="button" class="btn btn-primary" onclick="return abrir_modal('{% url 'ver_centro' c.pk %}')" title="Ver datos">
                                 <span class="glyphicon glyphicon-eye-open"></span>
                             </button>
-                            <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'editar_centro' pk=c.pk %}';" title="Editar datos">
+                            <button type="button" class="btn btn-primary" onclick="return abrir_modal('{% url 'editar_centro' pk=c.pk %}')" title="Editar datos">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </button>
-                            <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'lista_servicios' fk=c.pk %}';" title="Ver Servicios">
-                                <img src="{% static 'images/trebol.svg' %}">
+                            <button type="button" class="btn btn-primary disabled" onclick="" title="Añadir nuevo Servicio">
+                                <span class="glyphicon glyphicon-plus"><img src="{% static 'images/trebol.svg' %}"></span>
                             </button>
+
                         </td>
                     </tr>
                     {% for s in c.servicios %}
                         <tr class="child" id="{{ c.pk }}">
                             <td>
-                                <a href="{% url 'ver_servicio' pk=s.pk %}">
+                                <a href="#" onclick="return abrir_modal('{% url 'ver_servicio' s.pk %}')">
                                     {{ s.nombre }}
                                 </a>
                             </td>
                             <td>{{ s.ir }}</td>
-                            <td><button type="button" class="btn btn-primary" onclick="location.href = '{% url 'ver_servicio' pk=s.pk %}';" title="Ver datos">
-                                <span class="glyphicon glyphicon-eye-open"></span>
+                            <td><button type="button" class="btn btn-primary" onclick="return abrir_modal('{% url 'ver_servicio' s.pk %}')" title="Ver datos">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </button>
+                                <button type="button" class="btn btn-primary" onclick="return abrir_modal('{% url 'editar_servicio' s.pk %}')" title="Editar datos">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                                <button type="button" class="btn btn-primary disabled" onclick="location.href = '{% url 'lista_equipos' fk=s.pk %}';" title="Equipos">
+                                    <img src="{% static 'images/equipos.svg' %}"> &nbsp; <span class="badge">{{ s.equipos }}</span>
+                                </button>
+                                <button type="button" class="btn btn-primary disabled" title="Dosímetros">
+                                    <span class="glyphicon glyphicon-tags"></span>
+                                </button>
+                                <button type="button" class="btn btn-primary disabled" title="Licencias">
+                                    <span class="glyphicon glyphicon-credit-card"></span>
                                 </button>
                             </td>
                         </tr>
@@ -81,5 +109,8 @@
                 {% endfor %}
             </tbody>
         </table>
+    </div>
+    <div id="popup" class="modal fade" role="dialog">
+
     </div>
 {% endblock %}
