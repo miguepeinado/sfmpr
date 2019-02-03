@@ -59,7 +59,7 @@
                                     {{ s.nombre }}
                                 </a>
                             </td>
-                            <td>{{ s.ir }} {{ s.categoriair}}</td>
+                            <td>{{ s.ir }} {{ s.categoriair }}</td>
                             <td><button type="button" class="btn btn-primary" onclick="return abrir_modal('{% url 'ver_servicio' s.pk %}')" title="Ver datos">
                                     <span class="glyphicon glyphicon-eye-open"></span>
                                 </button>
@@ -73,7 +73,13 @@
                                 <button type="button" class="btn btn-primary disabled" onclick="location.href = '{% url 'lista_equipos' fk=s.pk %}';" title="Equipos">
                                     <img src="{% static 'images/equipos.svg' %}"> &nbsp; <span class="badge">{{ s.equipos }}</span>
                                 </button>
-                                <button type="button" class="btn btn-primary disabled" title="Licencias">
+                                {% endif %}
+                                {% if s.categoriair.id > 1 and s.categoriair.id < 4 %}
+                                <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'lista_licencias' fk=s.pk %}';" title="Licencias">
+                                    <span class="glyphicon glyphicon-credit-card"></span>
+                                </button>
+                                {% else %}
+                                <button type="button" class="btn default disabled" title="Sin Licencias" onclick="#">
                                     <span class="glyphicon glyphicon-credit-card"></span>
                                 </button>
                                 {% endif %}

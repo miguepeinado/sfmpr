@@ -112,6 +112,10 @@ def editar_equipo(request, pk):
     return render(request, 'sfmpr/nuevo_equipo.html', {'form': form})
 
 
+def lista_licencias(request, fk):
+    return render(request, 'sfmpr/lista_licencias.html')
+
+
 def ayuda(request):
     return render(request, "sfmpr/ayuda.html")
 
