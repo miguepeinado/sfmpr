@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^equipo/(?P<pk>[0-9]+)/editar/$', views.editar_equipo, name='editar_equipo'),
     # otros
     url(r'^otros/$', views.otros, name='otros'),
+    url(r'^help/$', views.help, name='help'),
 ]
