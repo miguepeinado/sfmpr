@@ -5,7 +5,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 
-
+# <----------------------------------- BASICO ------------------------------------->
 # Poner alias a los campos y ver como usarlos
 @python_2_unicode_compatible
 class Titular(models.Model):
@@ -80,6 +80,7 @@ class Servicio(models.Model):
     equipos = property(contar_equipos)
 
 
+# <----------------------------------- EQUIPOS ------------------------------------->
 @python_2_unicode_compatible
 class Modalidad(models.Model):
     siglas = models.CharField(max_length=10, null=True, blank=True)
@@ -115,3 +116,6 @@ class Equipo(models.Model):
         txt = self.marca + " " + self.modelo
         txt += " (N.S. " + self.n_serie + ")" if self.n_serie is not None and len(self.n_serie) > 0 else ""
         return txt
+
+
+# <---------------------------------- LICENCIAS -------------------------------->

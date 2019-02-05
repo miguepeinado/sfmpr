@@ -113,7 +113,8 @@ def editar_equipo(request, pk):
 
 
 def lista_licencias(request, fk):
-    return render(request, 'sfmpr/lista_licencias.html')
+    servicio = Servicio.objects.filter(id=fk)[0]
+    return render(request, 'sfmpr/lista_licencias.html', {'servicio': servicio})
 
 
 def ayuda(request):
