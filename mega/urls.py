@@ -19,7 +19,8 @@ urlpatterns = [
     url(r'^equipo/(?P<pk>[0-9]+)/$', views.ver_equipo, name='ver_equipo'),
     url(r'^equipo/(?P<pk>[0-9]+)/editar/$', views.editar_equipo, name='editar_equipo'),
     # Licencias
-url(r'^lista_licencias/(?P<fk>[0-9]+)/$', views.lista_licencias, name='lista_licencias'),
+    url(r'^lista_licencias/(?P<fk>[0-9]+)/$', views.lista_licencias, name='lista_licencias'),
+    url(r'^sfmpr/nueva_licencia/(?P<fk>[0-9]+)/$', views.NuevaLicencia.as_view(), name='nueva_licencia'),
     # otros
     url(r'^otros/$', views.otros, name='otros'),
     url(r'^ayuda/$', views.ayuda, name='ayuda'),

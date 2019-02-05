@@ -3,16 +3,16 @@
 <div class="modal-dialog">
     <div class="modal-content">
         {% if object %}
-            <form role="form" action="{% url 'editar_servicio' object.pk %}" method="post">
+            <form role="form" action="{% url 'editar_licencia' object.pk %}" method="post">
         {% else %}
-            <form role="form" action="{% url 'nuevo_servicio' form.initial.centro %}" method="post">
+            <form role="form" action="{% url 'nueva_licencia' form.initial.licencia %}" method="post">
         {% endif %}
         <div class="modal-header">
             <h3>
-                {% if form.initial.nombre %}
-                    {{ form.initial.nombre }}
+                {% if form.initial.numero %}
+                    {{ form.initial.numero }}
                 {% else %}
-                    Nuevo Servicio
+                    Nueva Licencia
                 {% endif %}
 
             </h3>
@@ -20,7 +20,6 @@
         {% csrf_token %}
         <div class="modal-body">
             <div class="detalles">
-                    <p style="color: gray;"><b>Centro: </b> {{ form.text_centro }}</p>
                 {{ form.as_p }}
             </div>
         </div>

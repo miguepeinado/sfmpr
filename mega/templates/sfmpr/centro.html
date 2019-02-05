@@ -17,7 +17,10 @@
             {% csrf_token %}
             <div class="modal-body">
                 <div class="detalles">
-                        {{ form.as_p }}
+                    {% if form.initial.nombre %}
+                        <p style="color: gray;"><b>Titular: </b> {{ form.text_titular }}</p>
+                    {% endif %}
+                    {{ form.as_p }}
                 </div>
             </div>
             <div class="modal-footer">

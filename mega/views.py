@@ -8,8 +8,8 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login, authenticate
 from django.forms.widgets import DateInput
-from .models import Centro, Servicio, Equipo
-from .forms import FormCentro, FormServicio, FormEquipo
+from .models import Centro, Servicio, Equipo, Licencia
+from .forms import FormCentro, FormServicio, FormEquipo, FormLicencia
 
 
 def datos(model_instance):
@@ -39,6 +39,7 @@ def ver_centro(request, pk):
 class NuevoCentro(CreateView):
     template_name = 'sfmpr/centro.html'
     form_class = FormCentro
+    # form_class.base_fields['titular'].disabled = False
     success_url = reverse_lazy('lista_centros')
 
 
@@ -46,6 +47,7 @@ class EditarCentro(UpdateView):
     model = Centro
     template_name = 'sfmpr/centro.html'
     form_class = FormCentro
+    # form_class.base_fields['titular'].disabled = True
     success_url = reverse_lazy('lista_centros')
 
 # <--------------------->
@@ -62,7 +64,7 @@ class NuevoServicio(CreateView):
     success_url = reverse_lazy('lista_centros')
 
     def get_initial(self):
-        fk = self.request.resolver_match.kwargs['fk']
+        fk = int(self.request.resolver_match.kwargs['fk'])
         return {'centro': fk}
 
 
@@ -112,9 +114,21 @@ def editar_equipo(request, pk):
     return render(request, 'sfmpr/nuevo_equipo.html', {'form': form})
 
 
+# <------------------------------------>
 def lista_licencias(request, fk):
+    licencias = Licencia.objects.filter(servicio=fk)
     servicio = Servicio.objects.filter(id=fk)[0]
-    return render(request, 'sfmpr/lista_licencias.html', {'servicio': servicio})
+    return render(request, 'sfmpr/lista_licencias.html', {'licencias': licencias, 'servicio': servicio})
+
+
+class NuevaLicencia(CreateView):
+    template_name = 'sfmpr/licencia.html'
+    form_class = FormLicencia
+    success_url = reverse_lazy('lista_licencias')
+
+    def get_initial(self):
+        fk = self.request.resolver_match.kwargs['fk']
+        return {'licencia': fk}
 
 
 def ayuda(request):
