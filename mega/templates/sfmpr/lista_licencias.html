@@ -4,88 +4,43 @@
 
 {{% block content %}
     <div class="top-menu">
-        <h1>Licencias ({{ servicio }})
+        <h1>Licencias: {{ servicio }}
         <button type="button" class="btn btn-primary" onclick="#" title="Nueva Licencia">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
         </h1>
     </div>
-<!--
     <div class="listing">
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>Centro</th>
-                    <th>Dirección</th>
+                    <th>Licencia</th>
+                    <th>Titular</th>
                     <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
-                {% for c in centros %}
+                {% for l in licencias %}
                     <tr>
                         <td>
-                            <button type="button" class="btn btn-primary" id="expander" value="{{ c.pk }}">
+                            <button type="button" class="btn btn-primary" id="expander" value="{{ l.pk }}">
                                 <span class="glyphicon glyphicon-chevron-right"></span>
                             </button>
                             &nbsp;
-                            <a href="#" onclick="return abrir_modal('{% url 'ver_centro' c.pk %}')" title="Ver datos">
-                                {{ c }}
+                            <a href="#" title="Ver Incidencias">
+                                {{ l }}
                             </a>
                         </td>
-                        <td>{{ c.direccion }}
+                        <td>Nombre y Apellidos
                         </td>
                         <td>
-                            <button type="button" class="btn btn-primary" onclick="return abrir_modal('{% url 'ver_centro' c.pk %}')" title="Ver datos">
-                                <span class="glyphicon glyphicon-eye-open"></span>
-                            </button>
-                            <button type="button" class="btn btn-primary" onclick="return abrir_modal('{% url 'editar_centro' pk=c.pk %}')" title="Editar datos">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                            </button>
-                            <button type="button" class="btn btn-primary" onclick="return abrir_modal('{% url 'nuevo_servicio' fk=c.pk %}')" title="Añadir nuevo Servicio">
-                                <span class="glyphicon glyphicon-plus"><img src="{% static 'images/trebol.svg' %}"></span>
-                            </button>
-
+                            Botones
                         </td>
                     </tr>
-                    {% for s in c.servicios %}
-                        <tr class="child" id="{{ c.pk }}">
-                            <td>
-                                <a href="#" onclick="return abrir_modal('{% url 'ver_servicio' s.pk %}')">
-                                    {{ s.nombre }}
-                                </a>
-                            </td>
-                            <td>{{ s.ir }} {{ s.categoriair }}</td>
-                            <td><button type="button" class="btn btn-primary" onclick="return abrir_modal('{% url 'ver_servicio' s.pk %}')" title="Ver datos">
-                                    <span class="glyphicon glyphicon-eye-open"></span>
-                                </button>
-                                <button type="button" class="btn btn-primary" onclick="return abrir_modal('{% url 'editar_servicio' s.pk %}')" title="Editar datos">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </button>
-                                <button type="button" class="btn btn-primary disabled" title="Dosímetros">
-                                    <span class="glyphicon glyphicon-tags"></span>
-                                </button>
-                                {% if s.categoriair.id > 1 %}
-                                <button type="button" class="btn btn-primary disabled" onclick="location.href = '{% url 'lista_equipos' fk=s.pk %}';" title="Equipos">
-                                    <img src="{% static 'images/equipos.svg' %}"> &nbsp; <span class="badge">{{ s.equipos }}</span>
-                                </button>
-                                {% endif %}
-                                {% if s.categoriair.id > 1 and s.categoriair.id < 4 %}
-                                <button type="button" class="btn btn-primary" onclick="location.href = '{% url 'lista_licencias' fk=s.pk %}';" title="Licencias">
-                                    <span class="glyphicon glyphicon-credit-card"></span>
-                                </button>
-                                {% else %}
-                                <button type="button" class="btn default disabled" title="Sin Licencias" onclick="#">
-                                    <span class="glyphicon glyphicon-credit-card"></span>
-                                </button>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
                 {% endfor %}
             </tbody>
         </table>
     </div>
-    -->
     <div id="popup" class="modal fade" role="dialog">
 
     </div>

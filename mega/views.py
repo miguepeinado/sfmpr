@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login, authenticate
 from django.forms.widgets import DateInput
-from .models import Centro, Servicio, Equipo
+from .models import Centro, Servicio, Equipo, Licencia
 from .forms import FormCentro, FormServicio, FormEquipo
 
 
@@ -113,8 +113,9 @@ def editar_equipo(request, pk):
 
 
 def lista_licencias(request, fk):
+    licencias = Licencia.objects.filter(servicio=fk)
     servicio = Servicio.objects.filter(id=fk)[0]
-    return render(request, 'sfmpr/lista_licencias.html', {'servicio': servicio})
+    return render(request, 'sfmpr/lista_licencias.html', {'licencias': licencias, 'servicio': servicio})
 
 
 def ayuda(request):

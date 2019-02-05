@@ -7,7 +7,6 @@ from django.utils.encoding import python_2_unicode_compatible
 
 # <----------------------------------- BASICO ------------------------------------->
 # Poner alias a los campos y ver como usarlos
-@python_2_unicode_compatible
 class Titular(models.Model):
     nif = models.CharField(max_length=15)
     nombre = models.CharField(max_length=100)
@@ -17,11 +16,10 @@ class Titular(models.Model):
     provincia = models.CharField(max_length=25, default='Asturias')
     siglas = models.CharField(max_length=10, null=True, blank=True)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.nombre
 
 
-@python_2_unicode_compatible
 class Centro(models.Model):
     titular = models.ForeignKey(Titular, on_delete=models.CASCADE)
     area = models.CharField(max_length=5, null=True, blank=True)
@@ -34,10 +32,10 @@ class Centro(models.Model):
     fecha_alta = models.DateField(default=timezone.now)
     fecha_baja = models.DateField(null=True, blank=True)
 
-    def __str__(self):
-        txt = ""
+    def __unicode__(self):
+        txt = u""
         if self.area is not None and len(self.area) > 0:
-            txt = (self.area + " - ")
+            txt = self.area + " - "
         txt += self.nombre
         return txt
 
@@ -46,15 +44,13 @@ class Centro(models.Model):
         return Servicio.objects.filter(centro=self)
 
 
-@python_2_unicode_compatible
 class CategoriaIR(models.Model):
     categoria = models.CharField(max_length=100)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.categoria
 
 
-@python_2_unicode_compatible
 class Servicio(models.Model):
     centro = models.ForeignKey(Centro, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=100)
@@ -66,8 +62,9 @@ class Servicio(models.Model):
     fecha_alta = models.DateField(default=timezone.now)
     fecha_baja = models.DateField(null=True, blank=True)
 
-    def __str__(self):
-        return self.nombre
+    def __unicode__(self):
+        txt = self.nombre + ' (' + self.centro.__unicode__() + ')'
+        return txt
 
     def codigo_completo(self):
         codigo = self.n_ir
@@ -81,18 +78,16 @@ class Servicio(models.Model):
 
 
 # <----------------------------------- EQUIPOS ------------------------------------->
-@python_2_unicode_compatible
 class Modalidad(models.Model):
     siglas = models.CharField(max_length=10, null=True, blank=True)
     nombre = models.CharField(max_length=100)
 
-    def __str__(self):
+    def __unicode__(self):
         txt = self.nombre
         txt += " (" + self.siglas + ")" if self.siglas is not None and len(self.siglas) > 0 else ""
         return txt
 
 
-@python_2_unicode_compatible
 class Equipo(models.Model):
     servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE)
     sala = models.CharField(max_length=50)
@@ -106,8 +101,7 @@ class Equipo(models.Model):
     fecha_alta = models.DateField(default=timezone.now)
     fecha_baja = models.DateField(null=True, blank=True)
 
-
-    def __str__(self):
+    def __unicode__(self):
         txt = self.sala
         txt += " (" + self.referencia + ")" if self.referencia is not None and len(self.referencia) > 0 else ""
         return txt
@@ -119,3 +113,11 @@ class Equipo(models.Model):
 
 
 # <---------------------------------- LICENCIAS -------------------------------->
+class Licencia(models.Model):
+    servicio = models.ManyToManyField(Servicio)
+    tipo = models.CharField(max_length=10)
+    numero = models.CharField(max_length=20)
+
+    def __unicode__(self):
+        txt = self.numero + ' (' + self.tipo + ')'
+        return txt
