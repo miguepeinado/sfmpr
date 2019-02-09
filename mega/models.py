@@ -145,7 +145,7 @@ class Licencia(models.Model):
     servicio = models.ManyToManyField(Servicio)
     tipo = models.CharField(max_length=10)
     numero = models.CharField(max_length=20)
-    titular = models.ForeignKey(Trabajador, db_column='titular_nid', default='0', on_delete=models.CASCADE)
+    trabajador = models.ForeignKey(Trabajador, default=0, on_delete=models.CASCADE)
     fecha_concesion = models.DateField(null=True, blank=True)
     fecha_baja = models.DateField(null=True, blank=True)
 
