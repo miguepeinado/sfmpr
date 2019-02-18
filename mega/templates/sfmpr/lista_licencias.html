@@ -14,8 +14,9 @@
         <table class="table table-hover">
             <thead>
                 <tr>
+                    <th>Nombre y Apellidos</th>
                     <th>Licencia</th>
-                    <th>Titular</th>
+                    <th>Validez</th>
                     <th>Acciones</th>
               </tr>
             </thead>
@@ -28,11 +29,18 @@
                             </button>
                             &nbsp;
                             <a href="#">
+                                {{ l.trabajador }}
+                            </a>
+                        </td>
+                        <td>
+                             <a href="#" onclick="return abrir_modal('{% url 'ver_licencia' l.pk %}')" title="Ver datos">
                                 {{ l }}
                             </a>
                         </td>
-                        <td>Nombre y Apellidos
+                        <td>
+                            {{ l.valida_desde }}{{ l.valida_hasta }}
                         </td>
+
                         <td>
                             Botones
                         </td>

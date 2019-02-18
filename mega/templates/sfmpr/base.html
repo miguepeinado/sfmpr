@@ -22,14 +22,8 @@
                     $("button#expander[value=" + id + "] span.glyphicon").toggleClass("glyphicon-chevron-down glyphicon-chevron-right") ;
                 });
             });
-
-            function abrir_modal(url) {
-                $('#popup').load(url, function() {
-                    $(this).modal('show');
-                });
-                return false;
-            }
         </script>
+        <script src="{% static 'js/modal.form.js' %}" type="text/javascript"></script>
     </head>
     <body>
         {% block extra_js %}

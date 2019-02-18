@@ -10,7 +10,6 @@ urlpatterns = [
     url(r'^editar_centro/(?P<pk>[0-9]+)/$', views.EditarCentro.as_view(), name='editar_centro'),
     # servicios
     url(r'^nuevo_servicio/(?P<fk>[0-9]+)/$', views.NuevoServicio.as_view(), name='nuevo_servicio'),
-    # url(r'^nuevo_servicio/$', views.NuevoServicio.as_view(), name='nuevo_servicio'),
     url(r'^ver_servicio/(?P<pk>[0-9]+)/$', views.ver_servicio, name='ver_servicio'),
     url(r'^editar_servicio/(?P<pk>[0-9]+)/$', views.EditarServicio.as_view(), name='editar_servicio'),
     # Equipos
@@ -20,7 +19,11 @@ urlpatterns = [
     url(r'^equipo/(?P<pk>[0-9]+)/editar/$', views.editar_equipo, name='editar_equipo'),
     # Licencias
     url(r'^lista_licencias/(?P<fk>[0-9]+)/$', views.lista_licencias, name='lista_licencias'),
-    url(r'^sfmpr/nueva_licencia/(?P<fk>[0-9]+)/$', views.NuevaLicencia.as_view(), name='nueva_licencia'),
+    url(r'^ver_licencia/(?P<pk>[0-9]+)/$', views.ver_licencia, name='ver_licencia'),
+    url(r'^editar_licencia/(?P<pk>[0-9]+)/$', views.EditarLicencia.as_view(), name='editar_licencia'),
+    url(r'^nueva_licencia/(?P<fk>[0-9]+)/$', views.NuevaLicencia.as_view(), name='nueva_licencia'),
+    url(r'^nuevo_trabajador/(?P<sk>[0-9]+)/$', views.NuevoTrabajador.as_view(), name='nuevo_trabajador'),
+    # url(r'^trabajador/(?P<sk>[0-9]+)/$', views.nuevo_trabajador, name='nuevo_trabajador'),
     # otros
     url(r'^otros/$', views.otros, name='otros'),
     url(r'^ayuda/$', views.ayuda, name='ayuda'),

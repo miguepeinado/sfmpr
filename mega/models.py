@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from datetime import datetime, timedelta
 
 from django.db import models
 from django.utils import timezone
@@ -123,7 +124,8 @@ class Titulacion(models.Model):
 
 class Trabajador(models.Model):
     # NIF/NIE/Pasaporte
-    nid = models.CharField(max_length=20, primary_key=True)
+    # todo: Hacer el campo nid unico
+    nid = models.CharField(max_length=20)   #, unique=True)
     nombre = models.CharField(max_length=30)
     apellido1 = models.CharField(max_length=50)
     apellido2 = models.CharField(max_length=50, null=True, blank=True)
@@ -136,7 +138,9 @@ class Trabajador(models.Model):
     titulacion = models.ForeignKey(Titulacion, null=True, blank=True, on_delete=models.CASCADE)
 
     def __unicode__(self):
-        txt = self.nombre + ' ' + self.apellido1 + ' ' + self.apellido2
+        txt = self.nombre + ' ' + self.apellido1 + ' '
+        if self.apellido2 is not None:
+            txt += self.apellido2
         return txt
 
 
@@ -151,4 +155,21 @@ class Licencia(models.Model):
 
     def __unicode__(self):
         txt = self.numero + ' (' + self.tipo + ')'
+        return txt
+
+    def valida_desde(self):
+        if self.fecha_concesion is not None:
+            return self.fecha_concesion.strftime("%d/%m/%y")
+        else:
+            return u""
+
+    def valida_hasta(self):
+        txt = ""
+        if self.fecha_baja is None:
+            if self.fecha_concesion is not None:
+                txt = (self.fecha_concesion + timedelta(days=5*365.25)).strftime("%d/%m/%y")
+        else:
+            txt = self.fecha_baja.strftime("%d/%m/%y") + " (Baja)"
+        if len(txt) > 0:
+            txt = " hasta " + txt
         return txt

@@ -1,11 +1,17 @@
 {% load staticfiles %}
 
+<script type="text/javascript">
+    hide_select() {
+
+        alert("hola mundo")
+    }
+</script>
 <div class="modal-dialog">
     <div class="modal-content">
         {% if object %}
             <form role="form" action="{% url 'editar_licencia' object.pk %}" method="post">
         {% else %}
-            <form role="form" action="{% url 'nueva_licencia' form.initial.licencia %}" method="post">
+            <form role="form" action="{% url 'nueva_licencia' form.initial.servicio %}" method="post">
         {% endif %}
         <div class="modal-header">
             <h3>
@@ -20,11 +26,15 @@
         {% csrf_token %}
         <div class="modal-body">
             <div class="detalles">
+                    <script>hide_select();</script>
+                    <script>alert({{ form.as_p }});</script>
+                <p style="color: gray;"><b>Servicio: </b> {{ form.text_servicio }}</p>
                 {{ form.as_p }}
             </div>
         </div>
         <div class="modal-footer">
             <div class="col-lg-12 text-right">
+                Añadir incidencia??
                 <button type="submit" class="save btn btn-primary" title="Guardar">
                     <span class="glyphicon glyphicon-save"></span>
                 </button>

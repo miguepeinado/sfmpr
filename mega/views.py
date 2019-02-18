@@ -1,24 +1,24 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from collections import OrderedDict
+import copy
 
-from django.views.generic.edit import UpdateView, CreateView
+from django.views.generic.edit import FormView, UpdateView, CreateView
 from django.core.urlresolvers import reverse_lazy
 
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from django.contrib.auth import login, authenticate
 from django.forms.widgets import DateInput
 from .models import Centro, Servicio, Equipo, Licencia
-from .forms import FormCentro, FormServicio, FormEquipo, FormLicencia
+from .forms import FormCentro, FormServicio, FormEquipo, FormLicencia, FormTrabajador
+from django.forms import ValidationError
 
 
-def datos(model_instance):
+def datos(model_instance, id_included=False):
     _datos = OrderedDict()
-    for f in model_instance._meta.fields:
-        if f.name != "id":
+    for f in model_instance._meta.get_fields():
+        if f.name != "id" or id_included:
             key = f.name.capitalize()
-            # if key.split("_")[0]=="N":
-            #     key = key.replace(key[0:key.find("_")], "Nº")
             key = key.replace("_", " ")
             _datos[key] = getattr(model_instance, f.name, None)
             if _datos[key] is None:
@@ -39,7 +39,6 @@ def ver_centro(request, pk):
 class NuevoCentro(CreateView):
     template_name = 'sfmpr/centro.html'
     form_class = FormCentro
-    # form_class.base_fields['titular'].disabled = False
     success_url = reverse_lazy('lista_centros')
 
 
@@ -47,12 +46,10 @@ class EditarCentro(UpdateView):
     model = Centro
     template_name = 'sfmpr/centro.html'
     form_class = FormCentro
-    # form_class.base_fields['titular'].disabled = True
     success_url = reverse_lazy('lista_centros')
 
+
 # <--------------------->
-
-
 def ver_servicio(request, pk):
     servicio = get_object_or_404(Servicio, pk=pk)
     return render(request, 'sfmpr/ver_servicio.html', {'servicio': servicio, 'datos': datos(servicio)})
@@ -121,14 +118,57 @@ def lista_licencias(request, fk):
     return render(request, 'sfmpr/lista_licencias.html', {'licencias': licencias, 'servicio': servicio})
 
 
+def ver_licencia(request, pk):
+    licencia = get_object_or_404(Licencia, pk=pk)
+    return render(request, 'sfmpr/ver_licencia.html', {'licencia': licencia, 'datos': datos(licencia), })
+
+
 class NuevaLicencia(CreateView):
     template_name = 'sfmpr/licencia.html'
     form_class = FormLicencia
-    success_url = reverse_lazy('lista_licencias')
 
     def get_initial(self):
         fk = self.request.resolver_match.kwargs['fk']
-        return {'licencia': fk}
+        return {'servicio': fk, }
+
+    def post(self, request, *args, **kwargs):
+        form = FormLicencia(request.POST)
+        if form.is_valid():
+            licencia = form.save()
+            licencia.save()
+            return redirect(self.request.META.get('HTTP_REFERER'))
+        return super(NuevaLicencia, self).post(request, *args, **kwargs)
+
+
+class EditarLicencia(UpdateView):
+    model = Licencia
+    template_name = 'sfmpr/licencia.html'
+    form_class = FormLicencia
+
+    def get_success_url(self):
+        return self.request.META.get('HTTP_REFERER')
+
+# def nuevo_trabajador(request, sk):
+    # print "sk", sk
+    # if request.method == "POST":
+    #     form = FormTrabajador(request.POST)
+    #     if form.is_valid():
+    #         trabajador = form.save(commit=False)
+    #         trabajador.save()
+    #     return redirect('nueva_licencia', fk=trabajador.servicio)
+    # else:
+    #     form = FormTrabajador(initial={'servicio': sk})
+    #     return render(request, 'sfmpr/trabajador.html', {'form': form})
+
+
+class NuevoTrabajador(CreateView):
+    template_name = 'sfmpr/trabajador.html'
+    form_class = FormTrabajador
+    success_url = reverse_lazy('lista_centros')
+
+    def get_initial(self):
+        sk = int(self.request.resolver_match.kwargs['sk'])
+        return {'servicio': sk}
 
 
 def ayuda(request):
