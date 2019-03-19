@@ -3,9 +3,8 @@
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>
-                {{ servicio.nombre }}
-                <button type="button" class="btn btn-primary pull-right" onclick="return abrir_modal('{% url 'editar_servicio' pk=servicio.pk %}')" title="Editar datos">
+            <h3> {{ trabajador }}
+                <button type="button" class="btn btn-primary pull-right" onclick="return abrir_modal('{% url 'editar_trabajador' trabajador.pk %}')" title="Editar datos">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </button>
             </h3>
@@ -13,7 +12,7 @@
         <div class="modal-body">
             <div class="detalles">
                 {% for key, value in datos.items %}
-                    <p><b>{{ key }}: </b> {{ value }}</p>
+                    <p><b>{{ key }}: </b>{{ value|linebreaksbr }}</p>
                 {% endfor %}
             </div>
         </div>

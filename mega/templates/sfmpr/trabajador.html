@@ -3,7 +3,7 @@
         {% if object %}
         <form role="form" action="{% url 'editar_trabajador' object.pk %}" method="post">
         {% else %}
-        <form role="form" action="{% url 'nuevo_trabajador' form.initial.servicio %}" method="post">
+        <form role="form" action="{% url 'nuevo_trabajador' %}" method="post">
         {% endif %}
             <div class="modal-header">
                 <h3>

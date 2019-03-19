@@ -125,7 +125,7 @@ class Titulacion(models.Model):
 class Trabajador(models.Model):
     # NIF/NIE/Pasaporte
     # todo: Hacer el campo nid unico
-    nid = models.CharField(max_length=20)   #, unique=True)
+    nid = models.CharField(max_length=20)   # , unique=True)
     nombre = models.CharField(max_length=30)
     apellido1 = models.CharField(max_length=50)
     apellido2 = models.CharField(max_length=50, null=True, blank=True)

@@ -9,17 +9,31 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from django.contrib.auth import login, authenticate
 from django.forms.widgets import DateInput
-from .models import Centro, Servicio, Equipo, Licencia
+from .models import Centro, Servicio, Equipo, Licencia, Trabajador
+from django.db.models.fields.related import ManyToManyField
 from .forms import FormCentro, FormServicio, FormEquipo, FormLicencia, FormTrabajador
-from django.forms import ValidationError
 
 
-def datos(model_instance, id_included=False):
-    _datos = OrderedDict()
+from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+
+def datos(model_instance, initial_data = None, labels = {}, id_included=False):
+    _datos = initial_data if isinstance(initial_data, OrderedDict) else OrderedDict()
     for f in model_instance._meta.get_fields():
-        if f.name != "id" or id_included:
-            key = f.name.capitalize()
-            key = key.replace("_", " ")
+        # Do not include:
+        # Field id except if wanted
+        # Model fields that have this as a key
+        # Many2many fields
+        if (f.name != "id" or id_included) and not f.auto_created and not isinstance(f, ManyToManyField):
+            key = f.name
+            if key in labels:
+                key = labels[key]
+            else:
+                key = key.capitalize()
+                key = key.replace("_", " ")
             _datos[key] = getattr(model_instance, f.name, None)
             if _datos[key] is None:
                 _datos[key] = ""
@@ -120,12 +134,19 @@ def lista_licencias(request, fk):
 
 def ver_licencia(request, pk):
     licencia = get_object_or_404(Licencia, pk=pk)
-    return render(request, 'sfmpr/ver_licencia.html', {'licencia': licencia, 'datos': datos(licencia), })
+    s = u""
+    for element in licencia.servicio.values('nombre'):
+        s += element['nombre'] + "\n"
+
+    inicial = OrderedDict()
+    inicial['Servicio(s)'] = s
+    return render(request, 'sfmpr/ver_licencia.html', {'licencia': licencia, 'datos': datos(licencia, initial_data=inicial), })
 
 
 class NuevaLicencia(CreateView):
     template_name = 'sfmpr/licencia.html'
     form_class = FormLicencia
+
 
     def get_initial(self):
         fk = self.request.resolver_match.kwargs['fk']
@@ -135,7 +156,7 @@ class NuevaLicencia(CreateView):
         form = FormLicencia(request.POST)
         if form.is_valid():
             licencia = form.save()
-            licencia.save()
+            licencia.save()         # Redundant
             return redirect(self.request.META.get('HTTP_REFERER'))
         return super(NuevaLicencia, self).post(request, *args, **kwargs)
 
@@ -148,27 +169,38 @@ class EditarLicencia(UpdateView):
     def get_success_url(self):
         return self.request.META.get('HTTP_REFERER')
 
-# def nuevo_trabajador(request, sk):
-    # print "sk", sk
-    # if request.method == "POST":
-    #     form = FormTrabajador(request.POST)
-    #     if form.is_valid():
-    #         trabajador = form.save(commit=False)
-    #         trabajador.save()
-    #     return redirect('nueva_licencia', fk=trabajador.servicio)
-    # else:
-    #     form = FormTrabajador(initial={'servicio': sk})
-    #     return render(request, 'sfmpr/trabajador.html', {'form': form})
+
+def ver_trabajador(request, pk):
+    trabajador = get_object_or_404(Trabajador, pk=pk)
+    labels = {'nid': u'NIF/Pasaporte', 'apellido1': u'Apellido 1', 'apellido2': u'Apellido 2',
+              'telefono': u'Teléfono', 'cp': u'Código postal', 'titulacion': u'Titulación', }
+    return render(request, 'sfmpr/ver_trabajador.html', {'trabajador': trabajador,
+                                                         'datos': datos(trabajador, labels=labels)})
 
 
 class NuevoTrabajador(CreateView):
     template_name = 'sfmpr/trabajador.html'
     form_class = FormTrabajador
-    success_url = reverse_lazy('lista_centros')
 
-    def get_initial(self):
-        sk = int(self.request.resolver_match.kwargs['sk'])
-        return {'servicio': sk}
+    def post(self, request, *args, **kwargs):
+        form = FormTrabajador(request.POST)
+        if form.is_valid():
+            trabajador = form.save()
+            trabajador.save()
+            return redirect(self.request.META.get('HTTP_REFERER'))
+        return super(NuevoTrabajador, self).post(request, *args, **kwargs)
+
+    # def get_success_url(self):
+    #     return self.request.META.get('HTTP_REFERER')
+
+
+class EditarTrabajador(UpdateView):
+    model = Trabajador
+    template_name = 'sfmpr/trabajador.html'
+    form_class = FormTrabajador
+
+    def get_success_url(self):
+        return self.request.META.get('HTTP_REFERER')
 
 
 def ayuda(request):

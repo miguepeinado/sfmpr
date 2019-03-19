@@ -4,16 +4,15 @@
     <div class="modal-content">
         <div class="modal-header">
             <h3> Licencia nº {{ licencia }}
-                <button type="button" class="btn btn-primary" onclick="return abrir_modal('{% url 'editar_licencia' licencia.pk %}')" title="Editar datos">
+                <button type="button" class="btn btn-primary pull-right" onclick="return abrir_modal('{% url 'editar_licencia' licencia.pk %}')" title="Editar datos">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </button>
             </h3>
         </div>
         <div class="modal-body">
             <div class="detalles">
-                <p style="color: red;">Faltan los servicios!!</p>
                 {% for key, value in datos.items %}
-                    <p><b>{{ key }}: </b> {{ value }}</p>
+                    <p><b>{{ key }}: </b>{{ value|linebreaksbr }}</p>
                 {% endfor %}
             </div>
         </div>

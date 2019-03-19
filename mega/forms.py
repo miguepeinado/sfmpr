@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.template.loader import render_to_string
+from django.core.urlresolvers import reverse
+from django.utils.safestring import mark_safe
+from django.forms import widgets
+from django.conf import settings
 
 from .models import Centro, Servicio, Equipo, Licencia, Trabajador
 
@@ -50,11 +54,10 @@ class SelectWithPop(forms.Select):
 
     def __init__(self, attrs=None, choices=()):
         super(SelectWithPop, self).__init__(attrs, choices)
-        self.clave = ""
 
     def render(self, name, *args, **kwargs):
         html = super(SelectWithPop, self).render(name, *args, **kwargs)
-        popupplus = render_to_string("sfmpr/popupplus.html", {'field': name, 'clave': self.clave})
+        popupplus = render_to_string("sfmpr/popupplus.html", {'field': name, })
         return html+popupplus
 
 
@@ -71,25 +74,26 @@ class FormLicencia(forms.ModelForm):
                 self.fields['servicio'].widget = forms.HiddenInput()
                 id_servicio = int(self.initial['servicio'])
                 self.text_servicio = query_set[id_servicio - 1]
-                # además lo pasa al nuevo widget para volver luego a este punto
-                self.fields['trabajador'].widget.clave = id_servicio
+                # # además lo pasa al nuevo widget para volver luego a este punto
+                # self.fields['trabajador'].widget.clave = id_servicio
+
 
     class Meta:
         model = Licencia
         fields = '__all__'
-        widgets = {'trabajador': SelectWithPop, 'tipo': forms.Select(
+        widgets = {'trabajador': SelectWithPop(), 'tipo': forms.Select(
             choices=(('Operador', 'Operador'), ('Supervisor', 'Supervisor'), ))}
 
 
 class FormTrabajador(forms.ModelForm):
-    servicio = forms.CharField()
-
-    def save(self, commit=True):
-        key_field = self.cleaned_data.get('servicio', None)
-        id = self.cleaned_data.get('nid', None)
-        print key_field, id
-        # ...do something with extra_field here...
-        return super(FormTrabajador, self).save(commit=commit)
+    # servicio = forms.CharField()
+    #
+    # def save(self, commit=True):
+    #     key_field = self.cleaned_data.get('servicio', None)
+    #     id = self.cleaned_data.get('nid', None)
+    #     print key_field, id
+    #     # ...do something with extra_field here...
+    #     return super(FormTrabajador, self).save(commit=commit)
 
     class Meta:
         model = Trabajador
