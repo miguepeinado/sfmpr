@@ -28,7 +28,7 @@
                                 <span class="glyphicon glyphicon-chevron-right"></span>
                             </button>
                             &nbsp;
-                            <a href="#">
+                            <a href="#" onclick="return abrir_modal('{% url 'ver_trabajador' l.trabajador.pk %}')" title="Ver datos">
                                 {{ l.trabajador }}
                             </a>
                         </td>

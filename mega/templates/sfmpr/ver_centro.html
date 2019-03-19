@@ -4,7 +4,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <h3> {{ centro.nombre }}
-                <button type="button" class="btn btn-primary" onclick="return abrir_modal('{% url 'editar_centro' pk=centro.pk %}')" title="Editar datos">
+                <button type="button" class="btn btn-primary pull-right" onclick="return abrir_modal('{% url 'editar_centro' pk=centro.pk %}')" title="Editar datos">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </button>
             </h3>
